@@ -1,0 +1,6 @@
+{
+  "name": "Jadwal!n",
+  "description": "Portal informasi agenda sekolah, info terkini, dan jadwal pelajaran SMKN 46 Jakarta.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
