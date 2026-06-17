@@ -188,16 +188,23 @@ const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL ||
 const supabaseKey = process.env.SUPABASE_KEY || process.env.SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY || '';
 
 const isSupabaseConfigured = !!(supabaseUrl && supabaseKey);
+console.log('Supabase configuration check:', { isSupabaseConfigured, supabaseUrl: !!supabaseUrl, supabaseKey: !!supabaseKey });
+
 const supabase = isSupabaseConfigured ? createClient(supabaseUrl, supabaseKey) : null;
 
 // Initialize and seed Supabase on startup if configured and empty
 async function checkAndSeedSupabase() {
-  if (!supabase) return;
+  if (!supabase) {
+    console.log('Supabase not configured, skipping seed.');
+    return;
+  }
   try {
+    console.log('Attempting to connect to Supabase...');
     // Check if table 'kelas' is empty or if we can read it
     const { data: existingKelas, error } = await supabase.from('kelas').select('id').limit(1);
+    
     if (error) {
-      console.warn('⚠️ Supabase "kelas" table might not be initialized yet. Run the SQL script first. Error:', error.message);
+      console.error('⚠️ Supabase connection test failed. Error:', error.message);
       return;
     }
 
