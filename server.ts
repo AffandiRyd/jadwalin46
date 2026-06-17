@@ -379,6 +379,11 @@ alter table jadwal_pelajaran disable row level security;`;
 
   // Authentication Login
   app.post('/api/auth/login', async (req, res) => {
+    console.log("Login attempt. Supabase configured:", !!supabase);
+    if (!supabase) {
+      console.log("Supabase URL present:", !!supabaseUrl);
+      console.log("Supabase Key present:", !!supabaseKey);
+    }
     const { username, password } = req.body;
     if (!username || !password) {
        res.status(400).json({ error: 'Username dan password wajib diisi.' });
